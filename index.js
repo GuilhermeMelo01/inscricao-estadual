@@ -532,7 +532,7 @@ const validateIE = (ie, uf) => {
             } else {
                 return false;
             }
-            
+
         // Padrão
         default:
             return ie;
@@ -609,6 +609,9 @@ const formatIE = (ie, uf) => {
         // São Paulo
         case 'SP':
             return `${ie.substring(0, 3)}.${ie.substring(3, 6)}.${ie.substring(6, 9)}.${ie.substring(9, 12)}`;
+
+        case 'SC':
+            return `${ie.substring(0, 3)}.${ie.substring(3, 6)}.${ie.substring(6, 9)}`;
 
         // Padrão
         default:
