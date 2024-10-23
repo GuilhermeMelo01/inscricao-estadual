@@ -1,13 +1,14 @@
-const validateIE = (ie, uf) => {
-    switch (uf) {
+function validateIE(inscricaoEstadual, UF) {
+    let soma, resto, peso, pesos, digitoVerificador, tamanho = inscricaoEstadual.length;
+    switch (UF) {
         // Acre
         case 'AC':
-            if (ie.length == 13) {
+            if (inscricaoEstadual.length == 13) {
                 // Digitos verificadores
                 let pesos = [4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
                 let soma = 0;
                 for (let i = 0; i < 11; i++) {
-                    soma += +ie[i] * pesos[i];
+                    soma += +inscricaoEstadual[i] * pesos[i];
                 }
                 let modulo = soma % 11;
                 let conferirPrimeiroDigito = 11 - modulo;
@@ -22,7 +23,7 @@ const validateIE = (ie, uf) => {
                 pesos = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
                 soma = 0;
                 for (let i = 0; i < 12; i++) {
-                    soma += +ie[i] * pesos[i];
+                    soma += +inscricaoEstadual[i] * pesos[i];
                 }
 
                 modulo = soma % 11;
@@ -34,40 +35,40 @@ const validateIE = (ie, uf) => {
                     var segundoDigitoVerificador = conferirSegundoDigito;
                 }
 
-                if (primeiroDigitoVerificador == ie[11] && segundoDigitoVerificador == ie[12]) return true;
+                if (primeiroDigitoVerificador == inscricaoEstadual[11] && segundoDigitoVerificador == inscricaoEstadual[12]) return true;
                 else return false;
 
             } else return false;
 
         // Alagoas
         case 'AL':
-            if (ie.length == 9 && ie.substring(0, 2) == '24') {
-                if (ie.substring(2, 3) == 0 || ie.substring(2, 3) == 3 || ie.substring(2, 3) == 5 || ie.substring(2, 3) == 7 || ie.substring(2, 3) == 8) {
+            if (inscricaoEstadual.length == 9 && inscricaoEstadual.substring(0, 2) == '24') {
+                if (inscricaoEstadual.substring(2, 3) == 0 || inscricaoEstadual.substring(2, 3) == 3 || inscricaoEstadual.substring(2, 3) == 5 || inscricaoEstadual.substring(2, 3) == 7 || inscricaoEstadual.substring(2, 3) == 8) {
                     let pesos = [9, 8, 7, 6, 5, 4, 3, 2];
-                    ie.substring(2, 10);
+                    inscricaoEstadual.substring(2, 10);
                     let soma = 0;
                     for (let i = 0; i < 8; i++) {
-                        soma += +ie[i] * pesos[i];
+                        soma += +inscricaoEstadual[i] * pesos[i];
                     }
 
                     let produto = soma * 10;
                     let resto = produto - Math.floor(produto / 11) * 11;
 
                     if (resto == 10) {
-                        var digitoVerificador = 0;
+                        let digitoVerificador = 0;
                     } else {
-                        var digitoVerificador = resto;
+                        let digitoVerificador = resto;
                     }
 
-                    if (digitoVerificador == ie[8]) return true
+                    if (digitoVerificador == inscricaoEstadual[8]) return true
                     else return false;
                 } else return false;
             } else return false;
 
         // Amapá
         case 'AP':
-            if (ie.substring(0, 2) == '03' && ie.length == 9) {
-                let numeros = ie.substring(0, 8);
+            if (inscricaoEstadual.substring(0, 2) == '03' && inscricaoEstadual.length == 9) {
+                let numeros = inscricaoEstadual.substring(0, 8);
                 let p = 0;
                 let d = 0;
                 if (+numeros >= 300001 && +numeros <= 3017000) {
@@ -95,23 +96,23 @@ const validateIE = (ie, uf) => {
                     digitoVerificador = 'D';
                 } else { }
 
-                if (digitoVerificador == ie[8]) return true;
+                if (digitoVerificador == inscricaoEstadual[8]) return true;
                 else return false;
             } else return false;
 
         // Amazonas
         case 'AM':
             //TODO
-            if (ie.length == 9) {
+            if (inscricaoEstadual.length == 9) {
                 return true
             } else return false;
 
         // Bahia
         case 'BA':
-            if (ie.length == 8 || ie.length == 9) {
+            if (inscricaoEstadual.length == 8 || inscricaoEstadual.length == 9) {
                 // Se o número tiver 8 digitos
-                if (ie.length == 8) {
-                    let primeiroDigito = ie.substring(0, 1);
+                if (inscricaoEstadual.length == 8) {
+                    let primeiroDigito = inscricaoEstadual.substring(0, 1);
                     let modulo = 0
                     // Cálculo feito se o primeiro digito for igual a 1, 2, 3, 4, 5 ou 8
                     if (primeiroDigito == 0
@@ -127,7 +128,7 @@ const validateIE = (ie, uf) => {
                     let pesos = [7, 6, 5, 4, 3, 2];
                     let soma = 0;
                     for (let i = 0; i < pesos.length; i++) {
-                        soma += +ie[i] * pesos[i];
+                        soma += +inscricaoEstadual[i] * pesos[i];
                     }
 
                     let resto = soma % modulo;
@@ -136,7 +137,7 @@ const validateIE = (ie, uf) => {
 
                     // Calculando o primeiro digito verificador
                     pesos = [8, 7, 6, 5, 4, 3, 2];
-                    let numeros = ie.substring(0, 6) + ie.substring(7, 8);
+                    let numeros = inscricaoEstadual.substring(0, 6) + inscricaoEstadual.substring(7, 8);
                     soma = 0;
                     for (let i = 0; i < pesos.length; i++) {
                         soma += numeros[i] * pesos[i];
@@ -144,7 +145,7 @@ const validateIE = (ie, uf) => {
                     let primeiroDigitoVerificador = modulo - (soma % modulo);
 
                     // Conferindo se os números são iguais
-                    if (primeiroDigitoVerificador == ie[6] && segundoDigitoVerificador == ie[7]) return true;
+                    if (primeiroDigitoVerificador == inscricaoEstadual[6] && segundoDigitoVerificador == inscricaoEstadual[7]) return true;
                     else return false;
                 }
 
@@ -152,10 +153,10 @@ const validateIE = (ie, uf) => {
                 else {
                     // Calculando o segundo digito verificador
                     let modulo = 10
-                    let primeiroNumero = ie.substring(0, 1);
+                    let primeiroNumero = inscricaoEstadual.substring(0, 1);
                     if (primeiroNumero == 6 || primeiroNumero == 7 || primeiroNumero == 9) modulo = 11;
 
-                    let numeros = ie.substring(0, 7);
+                    let numeros = inscricaoEstadual.substring(0, 7);
                     let pesos = [8, 7, 6, 5, 4, 3, 2];
                     let soma = 0;
                     for (let i = 0; i < pesos.length; i++) {
@@ -167,7 +168,7 @@ const validateIE = (ie, uf) => {
                     if (resto == 0) segundoDigitoVerificador = 0;
 
                     // Calculando o primeiro digito verificador
-                    numeros = ie.substring(0, 7) + ie.substring(8, 9);
+                    numeros = inscricaoEstadual.substring(0, 7) + inscricaoEstadual.substring(8, 9);
                     pesos = [9, 8, 7, 6, 5, 4, 3, 2];
                     soma = 0;
                     for (let i = 0; i < pesos.length; i++) {
@@ -177,15 +178,15 @@ const validateIE = (ie, uf) => {
                     let primeiroDigitoVerificador = soma % modulo
 
                     // Conferindo se os digitos são iguais
-                    if (primeiroDigitoVerificador == ie.substring(7, 8) && segundoDigitoVerificador == ie.substring(8, 9)) return true;
+                    if (primeiroDigitoVerificador == inscricaoEstadual.substring(7, 8) && segundoDigitoVerificador == inscricaoEstadual.substring(8, 9)) return true;
                     else return false;
                 }
             } else return false;
 
         // Ceará
         case 'CE':
-            if (ie.length == 9) {
-                let numeros = ie.substring(0, 8);
+            if (inscricaoEstadual.length == 9) {
+                let numeros = inscricaoEstadual.substring(0, 8);
                 let pesos = [9, 8, 7, 6, 5, 4, 3, 2];
                 let soma = 0
                 for (let i = 0; i < pesos.length; i++) {
@@ -198,16 +199,16 @@ const validateIE = (ie, uf) => {
 
                 let digitoVerificador = 0
                 if (resto != 10 || resto != 11) digitoVerificador = 11 - resto;
-                if (ie[8] == digitoVerificador) return true;
+                if (inscricaoEstadual[8] == digitoVerificador) return true;
                 else return false;
 
             } else return false;
 
         // Destrito Federal
         case 'DF':
-            if (ie.length == 13) {
+            if (inscricaoEstadual.length == 13) {
                 // Calculando o primeiro digito verificador
-                let numeros = ie.substring(0, 11)
+                let numeros = inscricaoEstadual.substring(0, 11)
                 let pesos = [4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
                 let soma = 0
                 for (let i = 0; i < pesos.length; i++) {
@@ -221,9 +222,9 @@ const validateIE = (ie, uf) => {
 
         // Espirito Santo
         case 'ES':
-            if (ie.length == 9) {
+            if (inscricaoEstadual.length == 9) {
                 // Calcula o digito verificador
-                let numeros = ie.substring(0, 8);
+                let numeros = inscricaoEstadual.substring(0, 8);
                 let pesos = [9, 8, 7, 6, 5, 4, 3, 2];
                 let soma = 0
                 for (let i = 0; i < 8; i++) {
@@ -234,19 +235,19 @@ const validateIE = (ie, uf) => {
                 if (resto >= 2) digitoVerificador = 11 - resto;
 
                 // Confere o digito verificador
-                if (ie[8] == digitoVerificador) return true;
+                if (inscricaoEstadual[8] == digitoVerificador) return true;
                 else return false;
 
             } else return false;
 
         // Goiás
         case 'GO':
-            if (ie.length == 9) {
-                let primeirosDigitos = ie.substring(0, 2);
+            if (inscricaoEstadual.length == 9) {
+                let primeirosDigitos = inscricaoEstadual.substring(0, 2);
                 if (primeirosDigitos == 10
                     || primeirosDigitos == 11
                     || primeirosDigitos == 15) {
-                    let numeros = ie.substring(0, 8);
+                    let numeros = inscricaoEstadual.substring(0, 8);
                     let pesos = [9, 8, 7, 6, 5, 4, 3, 2]
                     let soma = 0;
                     for (let i = 0; i < pesos.length; i++) {
@@ -266,7 +267,7 @@ const validateIE = (ie, uf) => {
                     else digitoVerificador = 11 - resto;
 
                     // Conferindo os digitos verificadores
-                    if (ie[8] == digitoVerificador) return true;
+                    if (inscricaoEstadual[8] == digitoVerificador) return true;
                     else return false;
 
                 } else return false
@@ -274,9 +275,9 @@ const validateIE = (ie, uf) => {
 
         // Maranhão
         case 'MA':
-            if (ie.length == 9 && ie.substring(0, 2) == '12') {
+            if (inscricaoEstadual.length == 9 && inscricaoEstadual.substring(0, 2) == '12') {
                 // Calculando o vlaor do digito verificador
-                let numeros = ie.substring(0, 8);
+                let numeros = inscricaoEstadual.substring(0, 8);
                 let pesos = [9, 8, 7, 6, 5, 4, 3, 2];
                 let soma = 0
                 for (let i = 0; i < pesos.length; i++) {
@@ -289,15 +290,15 @@ const validateIE = (ie, uf) => {
                 if (resto == 0 || resto == 1) digitoVerificador = 0;
                 else digitoVerificador = 11 - resto;
 
-                if (digitoVerificador == ie[8]) return true;
+                if (digitoVerificador == inscricaoEstadual[8]) return true;
                 else return false;
             } else return false;
 
         // Mato Grosso
         case 'MT':
-            if (ie.length == 11) {
+            if (inscricaoEstadual.length == 11) {
                 // Calcula o digito verificador
-                let numeros = ie.substring(0, 10);
+                let numeros = inscricaoEstadual.substring(0, 10);
                 let pesos = [3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
                 let soma = 0;
                 for (let i = 0; i < pesos.length; i++) {
@@ -309,15 +310,15 @@ const validateIE = (ie, uf) => {
                 else digitoVerificador = 11 - resto;
 
                 // Confere o digito verificador
-                if (ie[10] == digitoVerificador) return true;
+                if (inscricaoEstadual[10] == digitoVerificador) return true;
                 else return false;
             } else return false;
 
         // Mato Grosso do Sul
         case 'MS':
-            if (ie.length == 9 && ie.substring(0, 2) == '28') {
+            if (inscricaoEstadual.length == 9 && inscricaoEstadual.substring(0, 2) == '28') {
                 // Calcula o digito verificador
-                let numeros = ie.substring(0, 8);
+                let numeros = inscricaoEstadual.substring(0, 8);
                 let pesos = [9, 8, 7, 6, 5, 4, 3, 2];
                 let soma = 0;
                 for (let i = 0; i < pesos.length; i++) {
@@ -334,14 +335,15 @@ const validateIE = (ie, uf) => {
                 else digitoVerificador = t;
 
                 // Confere o digito verificador
-                if (ie[8] == digitoVerificador) return true;
+                if (inscricaoEstadual[8] == digitoVerificador) return true;
                 else return false;
             } else return false;
 
+        // Minas Gerais
         case 'MG':
-            if (ie.length == 13) {
+            if (inscricaoEstadual.length == 13) {
                 // Calculando o primeiro digito verificador
-                let numeros = `${ie.substring(0, 3)}0${ie.substring(3, 12)}`;
+                let numeros = `${inscricaoEstadual.substring(0, 3)}0${inscricaoEstadual.substring(3, 12)}`;
                 let pesos = [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2];
                 let lista = []
                 for (let i = 0; i < pesos.length; i++) {
@@ -364,7 +366,7 @@ const validateIE = (ie, uf) => {
                 let primeiroDigitoVerificador = dezena - total;
 
                 // Calculando o segundo digito verificador
-                numeros = ie.substring(0, 12)
+                numeros = inscricaoEstadual.substring(0, 12)
                 pesos = [3, 2, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2]
                 let soma = 0;
 
@@ -376,15 +378,15 @@ const validateIE = (ie, uf) => {
                 let segundoDigitoVerificador = resto
 
                 // Comparando com o digito verificador
-                if (ie[11] == primeiroDigitoVerificador && ie[12] == segundoDigitoVerificador) return true;
+                if (inscricaoEstadual[11] == primeiroDigitoVerificador && inscricaoEstadual[12] == segundoDigitoVerificador) return true;
                 else return false;
             } else return false;
 
         // Pará
         case 'PA':
-            if (ie.length == 9 && ie.substring(0, 2) == '15') {
+            if (inscricaoEstadual.length == 9 && inscricaoEstadual.substring(0, 2) == '15') {
                 // Calculando o digito verificador
-                let numeros = ie.substring(0, 8);
+                let numeros = inscricaoEstadual.substring(0, 8);
                 let pesos = [9, 8, 7, 6, 5, 4, 3, 2];
                 let soma = 0;
                 for (let i = 0; i < pesos.length; i++) {
@@ -396,15 +398,15 @@ const validateIE = (ie, uf) => {
                 if (resto == 0 || resto == 1) digitoVerificador = 0;
                 else digitoVerificador = 11 - resto
 
-                if (ie[8] == digitoVerificador) return true;
+                if (inscricaoEstadual[8] == digitoVerificador) return true;
                 else return false;
             } else return false;
 
         // Paraíba
         case 'PB':
-            if (ie.length == 9) {
+            if (inscricaoEstadual.length == 9) {
                 // Calculando o digito verificador
-                let numeros = ie.substring(0, 8)
+                let numeros = inscricaoEstadual.substring(0, 8)
                 let pesos = [9, 8, 7, 6, 5, 4, 3, 2];
                 let soma = 0;
                 for (let i = 0; i < pesos.length; i++) {
@@ -416,15 +418,15 @@ const validateIE = (ie, uf) => {
                 else digitoVerificador = resto;
 
                 // Comparando o digito verificador
-                if (ie[8] == digitoVerificador) return true
+                if (inscricaoEstadual[8] == digitoVerificador) return true
                 else return false;
             } else return false;
 
         // Paraná
         case 'PR':
-            if (ie.length == 10) {
+            if (inscricaoEstadual.length == 10) {
                 // Calculando o primeiro digito verificador
-                let numeros = ie.substring(0, 8);
+                let numeros = inscricaoEstadual.substring(0, 8);
                 let pesos = [3, 2, 7, 6, 5, 4, 3, 2];
                 let soma = 0;
                 for (let i = 0; i < pesos.length; i++) {
@@ -449,14 +451,14 @@ const validateIE = (ie, uf) => {
                 else segundoDigitoVerificador = resto;
 
                 // Comparando os digitos verificadores
-                if (primeiroDigitoVerificador == ie[8] && segundoDigitoVerificador == ie[9]) return true;
+                if (primeiroDigitoVerificador == inscricaoEstadual[8] && segundoDigitoVerificador == inscricaoEstadual[9]) return true;
                 else return false;
             } else return false;
 
         // Pernambuco
         case 'PE':
-            if (ie.length == 9) {
-                let numeros = ie.substring(0, 7);
+            if (inscricaoEstadual.length == 9) {
+                let numeros = inscricaoEstadual.substring(0, 7);
                 let pesos = [8, 7, 6, 5, 4, 3, 2];
                 let soma = 0;
                 for (let i = 0; i < pesos.length; i++) {
@@ -477,65 +479,61 @@ const validateIE = (ie, uf) => {
                 let segundoDigitoVerificador;
                 if (resto == 10 || resto == 11) segundoDigitoVerificador = 0;
                 else segundoDigitoVerificador = resto;
-                if (primeiroDigitoVerificador == ie[7] && segundoDigitoVerificador == ie[8]) return true;
+                if (primeiroDigitoVerificador == inscricaoEstadual[7] && segundoDigitoVerificador == inscricaoEstadual[8]) return true;
                 else return false;
 
             } else return false;
+
+        // Santa Catarina
+        case 'SC':
+            if (tamanho !== 9) return false;
+            soma = 0
+            peso = 9;
+            for (let i = 0; i < tamanho - 1; i++) {
+                soma += inscricaoEstadual[i] * peso;
+                peso--;
+            }
+
+            let verificador = 11 - (soma % 11);
+
+            if ((soma % 11) == 0 || (soma % 11) == 1) {
+                verificador = 0
+            }
+
+            if (verificador != inscricaoEstadual.substring(tamanho - 1)) {
+                return false;
+            }
+            return true;
 
         // São Paulo
         case 'SP':
-            // It's not a bug, it's a feature.
-            if (ie.length == 12) {
-                // Calculando o primeiro digito verificador
-                let numeros = ie.substring(0, 8);
-                let pesos = [1, 3, 4, 5, 6, 7, 8, 10];
-                let soma = 0
-                for (let i = 0; i < pesos.length; i++) {
-                    soma += +numeros[i] * pesos[i];
-                }
-                let primeiroDigitoVerificador = soma % 11;
-                if (primeiroDigitoVerificador > 9) primeiroDigitoVerificador = 0;
-
-                // Calculando o segundo digito verificador
-                numeros = ie.substring(0, 11)
-                pesos = [3, 2, 10, 9, 8, 7, 6, 5, 4, 3, 2];
-                soma = 0;
-                for (let i = 0; i < pesos.length; i++) {
-                    soma += +numeros[i] * pesos[i];
-                }
-                segundoDigitoVerificador = soma % 11;
-                if (segundoDigitoVerificador > 9) segundoDigitoVerificador = 0;
-
-                // Verificando os digitos
-                if (ie[8] == primeiroDigitoVerificador && ie[11] == segundoDigitoVerificador) return true;
-                else return false;
-            } else return false;
-
-        case 'SC':
-            if (ie.length == 9) {
-                let soma = 0
-                let peso = 9;
-                for (let i = 0; i < ie.length - 1; i++) {
-                    soma += ie[i] * peso;
-                    peso--;
-                }
-                let divisor = 11 - (soma % 11);
-
-                if ((soma % 11) == 0 || (soma % 11) == 1) {
-                    divisor = 0
-                }
-
-                if (divisor != ie.substring(ie.length - 1)) {
-                    return false;
-                }
-                return true;
-            } else {
-                return false;
+            if (tamanho !== 12) return false;
+            // PRIMEIRA VERIFICAÇÃO
+            pesos = [1, 3, 4, 5, 6, 7, 8, 10];
+            soma = 0
+            for (let i = 0; i < 8; i++) {
+                soma += inscricaoEstadual[i] * pesos[i];
             }
+
+            digitoVerificador = resto = soma % 11;
+            if (resto >= 10) digitoVerificador = 0;
+            if (digitoVerificador != inscricaoEstadual[8]) return false;
+
+            // SEGUNDA VERIFICAÇÃO
+            pesos = [3, 2, 10, 9, 8, 7, 6, 5, 4, 3, 2];
+            soma = 0;
+            for (let i = 0; i < 11; i++) {
+                soma += inscricaoEstadual[i] * pesos[i];
+            }
+
+            digitoVerificador = resto = soma % 11;
+            if (digitoVerificador != inscricaoEstadual[11]) return false;
+            
+            return inscricaoEstadual;
 
         // Padrão
         default:
-            return ie;
+            return inscricaoEstadual;
     }
 }
 
@@ -627,4 +625,4 @@ const validateAndFormatIE = (ie, uf) => {
     }
 }
 
-console.log(validateAndFormatIE('504052427031', 'SP'));
+console.log(validateAndFormatIE('110042490114', 'SP'));
