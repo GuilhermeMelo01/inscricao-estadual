@@ -483,7 +483,25 @@ function validateIE(inscricaoEstadual, UF) {
                 else return false;
 
             } else return false;
+        
+        // Piauí
+        case 'PI':
+            if(tamanho != 9) return false;
+            pesos = [9,8,7,6,5,4,3,2];
+            soma = 0;
+            for(let i = 0; i < 8; i++){
+                soma += inscricaoEstadual[i] * pesos[i];
+            }
 
+            resto = soma % 11;
+            digitoVerificador = 11 - resto;
+
+            if(digitoVerificador == 10 || digitoVerificador == 11) digitoVerificador = 0;
+
+            if(digitoVerificador != inscricaoEstadual[8]) return false;
+
+            return inscricaoEstadual;
+        
         // Santa Catarina
         case 'SC':
             if (tamanho !== 9) return false;
@@ -602,6 +620,10 @@ const formatIE = (ie, uf) => {
         case 'PE':
             return `${ie.substring(0, 7)}-${ie.substring(7, 9)}`;
 
+        // Piauí
+        case 'PI':
+            return `${ie.substring(0, 8)}-${ie.substring(8, 9)}`;
+
         // São Paulo
         case 'SP':
             return `${ie.substring(0, 3)}.${ie.substring(3, 6)}.${ie.substring(6, 9)}.${ie.substring(9, 12)}`;
@@ -623,4 +645,4 @@ const validateAndFormatIE = (ie, uf) => {
     }
 }
 
-console.log(validateAndFormatIE('311361220', 'SC'));
+console.log(validateAndFormatIE('541571869', 'PI'));
