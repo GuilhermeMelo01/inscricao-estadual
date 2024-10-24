@@ -538,6 +538,24 @@ function validateIE(inscricaoEstadual, UF) {
 
             return inscricaoEstadual;
 
+        // Rio Grande do Sul
+        case 'RS':
+            if (tamanho != 10) return false;
+            pesos = [2, 9, 8, 7, 6, 5, 4, 3, 2];
+            soma = 0;
+            for (let i = 0; i < tamanho - 1; i++) {
+                soma += inscricaoEstadual[i] * pesos[i];
+            }
+
+            resto = soma % 11;
+            digitoVerificador = 11 - resto;
+
+            if (digitoVerificador == 10 || digitoVerificador == 11) digitoVerificador = 0;
+
+            if (digitoVerificador != inscricaoEstadual[9]) return false;
+
+            return inscricaoEstadual;
+
         // Santa Catarina
         case 'SC':
             if (tamanho !== 9) return false;
@@ -670,6 +688,9 @@ const formatIE = (ie, uf) => {
                 ? `${ie.substring(0, 2)}.${ie.substring(2, 5)}.${ie.substring(5, 8)}-${ie.substring(8, 9)}`
                 : `${ie.substring(0, 2)}.${ie.substring(2, 3)}.${ie.substring(3, 6)}.${ie.substring(6, 9)}-${ie.substring(9, 10)}`
 
+        // Rio Grande do Sul
+        case 'RS':
+            return `${ie.substring(0, 3)}/${ie.substring(3, 10)}`;
 
         // São Paulo
         case 'SP':
@@ -692,4 +713,4 @@ const validateAndFormatIE = (ie, uf) => {
     }
 }
 
-console.log(validateAndFormatIE('2000400400', 'RN'));
+console.log(validateAndFormatIE('6823215988', 'RS'));
