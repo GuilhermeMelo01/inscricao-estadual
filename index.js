@@ -483,25 +483,43 @@ function validateIE(inscricaoEstadual, UF) {
                 else return false;
 
             } else return false;
-        
+
         // Piauí
         case 'PI':
-            if(tamanho != 9) return false;
-            pesos = [9,8,7,6,5,4,3,2];
+            if (tamanho != 9) return false;
+            pesos = [9, 8, 7, 6, 5, 4, 3, 2];
             soma = 0;
-            for(let i = 0; i < 8; i++){
+            for (let i = 0; i < 8; i++) {
                 soma += inscricaoEstadual[i] * pesos[i];
             }
 
             resto = soma % 11;
             digitoVerificador = 11 - resto;
 
-            if(digitoVerificador == 10 || digitoVerificador == 11) digitoVerificador = 0;
+            if (digitoVerificador == 10 || digitoVerificador == 11) digitoVerificador = 0;
 
-            if(digitoVerificador != inscricaoEstadual[8]) return false;
+            if (digitoVerificador != inscricaoEstadual[8]) return false;
 
             return inscricaoEstadual;
-        
+
+        // Rio de Janeiro
+        case 'RJ':
+            if (tamanho != 8) return false;
+            pesos = [2, 7, 6, 5, 4, 3, 2];
+            soma = 0;
+            for (let i = 0; i < 7; i++) {
+                soma += inscricaoEstadual[i] * pesos[i];
+            }
+
+            resto = soma % 11;
+            digitoVerificador = 11 - resto;
+
+            if(resto <= 1) digitoVerificador = 0;
+
+            if (digitoVerificador != inscricaoEstadual[7]) return false;
+
+            return inscricaoEstadual;
+
         // Santa Catarina
         case 'SC':
             if (tamanho !== 9) return false;
@@ -518,7 +536,7 @@ function validateIE(inscricaoEstadual, UF) {
             if (resto == 0 || resto == 1) digitoVerificador = 0;
 
             if (digitoVerificador != inscricaoEstadual[8]) return false;
-            
+
             return inscricaoEstadual;
 
         // São Paulo
@@ -623,6 +641,10 @@ const formatIE = (ie, uf) => {
         // Piauí
         case 'PI':
             return `${ie.substring(0, 8)}-${ie.substring(8, 9)}`;
+        
+        // Rio de Janeiro
+        case 'RJ':
+            return `${ie.substring(0, 2)}.${ie.substring(2, 5)}.${ie.substring(5, 7)}-${ie.substring(7, 8)}`;
 
         // São Paulo
         case 'SP':
@@ -645,4 +667,4 @@ const validateAndFormatIE = (ie, uf) => {
     }
 }
 
-console.log(validateAndFormatIE('541571869', 'PI'));
+console.log(validateAndFormatIE('42224987', 'RJ'));
